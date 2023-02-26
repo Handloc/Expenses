@@ -6,6 +6,26 @@ const Button = styled.button`
   padding: 0.5rem;
   width: 7rem;
   font-size: 1.25rem;
+  background-color: #6d6d6d;
+  color: #ffffff;
+  border-radius: 1rem;
+  transition: background-color 0.2s;
+
+  &.Add:hover {
+    background-color: #0b8000;
+  }
+
+  &.Add:active {
+    background-color: #086100;
+  }
+
+  &.Cancel:hover {
+    background-color: #df0000;
+  }
+
+  &.Cancel:active {
+    background-color: #a30000;
+  }
 
   &:hover {
     cursor: pointer;
@@ -13,7 +33,11 @@ const Button = styled.button`
 `;
 
 function FormButton(props) {
-  return <Button type={props.type}>{props.name}</Button>;
+  return (
+    <Button type={props.type} className={props.name}>
+      {props.name}
+    </Button>
+  );
 }
 
 export default FormButton;
