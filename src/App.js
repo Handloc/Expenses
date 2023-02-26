@@ -1,20 +1,30 @@
-// import ExpensesForm from "./components/Form/ExpensesForm";
+import React, { useState } from "react";
 import styled from "styled-components";
+import Expenses from "./components/Expenses/Expenses";
 import Form from "./components/Form/Form";
+import "./App.scss";
 
 const Wrapper = styled.div`
-  background-color: darkmagenta;
-  width: 100vw;
-  height: 100vh;
   display: flex;
-  justify-content: center;
   align-items: center;
+  flex-direction: column;
 `;
 
+const EXPENSES_DATA = [];
+
 function App() {
+  const [expenseData, setExpenseData] = useState(EXPENSES_DATA);
+
+  function CreateExpense(formData) {
+    setExpenseData((prevExpensesData) => {
+      return [formData, ...prevExpensesData];
+    });
+  }
+
   return (
     <Wrapper>
-      <Form />
+      <Form onCreateExpense={CreateExpense} />
+      <Expenses items={expenseData} />
     </Wrapper>
   );
 }
