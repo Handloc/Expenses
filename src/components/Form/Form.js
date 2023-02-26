@@ -8,42 +8,62 @@ const FormWrapper = styled.form`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  width: 50vw;
-  background-color: gray;
+  width: 30%;
+  background-color: #494949;
   padding: 2rem;
+  color: white;
   border-radius: 1rem;
+  /* border: 0.2rem solid #e06500; */
   box-shadow: 0 0 10px black;
+  margin-top: 5rem;
 `;
 
 const FormButtonsWrapper = styled.div`
   flex-direction: row;
 `;
 
-function Form() {
+function Form(props) {
+  const [title, setTitle] = useState("");
+  const [amount, setAmount] = useState("");
+  const [date, setDate] = useState("");
+  const [submitted, setSubmitted] = useState();
+
   function submitHandler(event) {
     event.preventDefault();
+
     const expenseData = {
       title: title,
       amount: amount,
       date: date,
     };
 
-    console.log(expenseData);
+    if (
+      expenseData.title.length === 0 ||
+      expenseData.amount.length === 0 ||
+      expenseData.date.length === 0
+    ) {
+      setSubmitted(false);
+      console.log(submitted);
+    } else {
+      setSubmitted(true);
+      console.log(submitted);
+      props.onCreateExpense(expenseData);
+      setTitle((prevTitle) => "");
+      setAmount((prevAmount) => "");
+      setDate((prevDate) => "");
+    }
   }
 
-  const [title, setTitle] = useState();
   function handleChangedTitle(newTitle) {
     setTitle((prevTitle) => newTitle);
   }
 
-  const [amount, setAmount] = useState();
   function handleChangedAmount(newAmount) {
-    setAmount(newAmount);
+    setAmount((prevAmount) => newAmount);
   }
 
-  const [date, setDate] = useState();
   function handleChangedDate(newDate) {
-    setDate(newDate);
+    setDate((prevDate) => newDate);
   }
 
   return (
@@ -51,17 +71,23 @@ function Form() {
       <FormField
         name={"Title"}
         type={"text"}
+        value={title}
         onChangedData={handleChangedTitle}
+        submitted={submitted}
       />
       <FormField
         name={"Amount"}
         type={"number"}
+        value={amount}
         onChangedData={handleChangedAmount}
+        submitted={submitted}
       />
       <FormField
         name={"Date"}
         type={"date"}
+        value={date}
         onChangedData={handleChangedDate}
+        submitted={submitted}
       />
       <FormButtonsWrapper>
         <FormButton name={"Add"} type={"submit"} />
