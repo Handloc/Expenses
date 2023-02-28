@@ -27,6 +27,14 @@ const Button = styled.button`
     background-color: #a30000;
   }
 
+  &.New-expense:hover {
+    background-color: #e06500;
+  }
+
+  &.New-expense:active {
+    background-color: #be5600;
+  }
+
   &:hover {
     cursor: pointer;
   }
@@ -34,7 +42,11 @@ const Button = styled.button`
 
 function FormButton(props) {
   return (
-    <Button type={props.type} className={props.name}>
+    <Button
+      type={props.type}
+      className={props.name.replace(" ", "-")}
+      onClick={props.onClick}
+    >
       {props.name}
     </Button>
   );
