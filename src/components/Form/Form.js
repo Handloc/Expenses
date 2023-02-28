@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import FormField from "./FormField";
 import FormButton from "./FormButton";
+import { uuid } from "uuidv4";
 
 const FormWrapper = styled.form`
   display: flex;
@@ -13,7 +14,6 @@ const FormWrapper = styled.form`
   padding: 2rem;
   color: white;
   border-radius: 1rem;
-  /* border: 0.2rem solid #e06500; */
   box-shadow: 0 0 10px black;
   margin-top: 5rem;
 `;
@@ -26,12 +26,13 @@ function Form(props) {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [date, setDate] = useState("");
-  const [submitted, setSubmitted] = useState();
+  const [submitted, setSubmitted] = useState(true);
 
   function submitHandler(event) {
     event.preventDefault();
 
     const expenseData = {
+      key: uuid(),
       title: title,
       amount: amount,
       date: date,
@@ -43,10 +44,8 @@ function Form(props) {
       expenseData.date.length === 0
     ) {
       setSubmitted(false);
-      console.log(submitted);
     } else {
       setSubmitted(true);
-      console.log(submitted);
       props.onCreateExpense(expenseData);
       setTitle((prevTitle) => "");
       setAmount((prevAmount) => "");
@@ -91,7 +90,7 @@ function Form(props) {
       />
       <FormButtonsWrapper>
         <FormButton name={"Add"} type={"submit"} />
-        <FormButton name={"Cancel"} type={""} />
+        <FormButton name={"Cancel"} type={"button"} />
       </FormButtonsWrapper>
     </FormWrapper>
   );
