@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import FormField from "./FormField";
 import FormButton from "./FormButton";
-import { uuid } from "uuidv4";
+import { v4 as uuid } from "uuid";
 
 const FormWrapper = styled.form`
   display: flex;
@@ -27,6 +27,15 @@ function Form(props) {
   const [amount, setAmount] = useState("");
   const [date, setDate] = useState("");
   const [submitted, setSubmitted] = useState(true);
+  const [formActive, setFormActive] = useState(false);
+
+  function changeFormActive() {
+    setFormActive(true);
+  }
+
+  function changeFormInactive() {
+    setFormActive(false);
+  }
 
   function submitHandler(event) {
     event.preventDefault();
@@ -47,6 +56,7 @@ function Form(props) {
     } else {
       setSubmitted(true);
       props.onCreateExpense(expenseData);
+      changeFormInactive();
       setTitle((prevTitle) => "");
       setAmount((prevAmount) => "");
       setDate((prevDate) => "");
@@ -65,35 +75,51 @@ function Form(props) {
     setDate((prevDate) => newDate);
   }
 
-  return (
-    <FormWrapper onSubmit={submitHandler}>
-      <FormField
-        name={"Title"}
-        type={"text"}
-        value={title}
-        onChangedData={handleChangedTitle}
-        submitted={submitted}
-      />
-      <FormField
-        name={"Amount"}
-        type={"number"}
-        value={amount}
-        onChangedData={handleChangedAmount}
-        submitted={submitted}
-      />
-      <FormField
-        name={"Date"}
-        type={"date"}
-        value={date}
-        onChangedData={handleChangedDate}
-        submitted={submitted}
-      />
-      <FormButtonsWrapper>
-        <FormButton name={"Add"} type={"submit"} />
-        <FormButton name={"Cancel"} type={"button"} />
-      </FormButtonsWrapper>
-    </FormWrapper>
-  );
+  if (formActive === true) {
+    return (
+      <FormWrapper onSubmit={submitHandler}>
+        <FormField
+          name={"Title"}
+          type={"text"}
+          value={title}
+          onChangedData={handleChangedTitle}
+          submitted={submitted}
+        />
+        <FormField
+          name={"Amount"}
+          type={"number"}
+          value={amount}
+          onChangedData={handleChangedAmount}
+          submitted={submitted}
+        />
+        <FormField
+          name={"Date"}
+          type={"date"}
+          value={date}
+          onChangedData={handleChangedDate}
+          submitted={submitted}
+        />
+        <FormButtonsWrapper>
+          <FormButton name={"Add"} type={"submit"} />
+          <FormButton
+            name={"Cancel"}
+            type={"button"}
+            onClick={changeFormInactive}
+          />
+        </FormButtonsWrapper>
+      </FormWrapper>
+    );
+  } else {
+    return (
+      <FormWrapper>
+        <FormButton
+          name={"New expense"}
+          type={"button"}
+          onClick={changeFormActive}
+        />
+      </FormWrapper>
+    );
+  }
 }
 
 export default Form;
