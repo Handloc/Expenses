@@ -39,11 +39,11 @@ function Form(props) {
 
   function submitHandler(event) {
     event.preventDefault();
-
+    console.log(amount);
     const expenseData = {
       key: uuid(),
       title: title,
-      amount: amount,
+      amount: amount.includes(".") ? amount : amount + ".00",
       date: date,
     };
 
