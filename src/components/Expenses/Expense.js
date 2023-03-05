@@ -8,7 +8,7 @@ const ExpenseWrapper = styled.div`
   width: 80%;
   height: 100%;
   background-color: #e96900;
-  padding: 2rem;
+  padding: 0.5rem 2rem;
   border-radius: 1rem;
   box-shadow: 0 0 10px black;
   margin: 1rem 0;
@@ -41,11 +41,36 @@ const TitleContainer = styled.div`
   width: 40%;
 `;
 
+const Year = styled.p`
+  font-size: 1.5rem;
+  font-weight: 700;
+`;
+
+const Month = styled.p`
+  font-style: italic;
+`;
+
 function Expense(props) {
+  const monthNames = {
+    "01": "January",
+    "02": "February",
+    "03": "March",
+    "04": "April",
+    "05": "May",
+    "06": "June",
+    "07": "July",
+    "08": "August",
+    "09": "September",
+    10: "October",
+    11: "November",
+    12: "December",
+  };
   return (
     <ExpenseWrapper>
       <DateContainer>
-        <p>{props.date}</p>
+        <Year>{props.year}</Year>
+        <Month>{monthNames[props.month]}</Month>
+        <p>{props.day}</p>
       </DateContainer>
       <TitleContainer>{props.title}</TitleContainer>
       <DateContainer>${props.amount}</DateContainer>
