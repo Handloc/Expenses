@@ -39,7 +39,6 @@ function Form(props) {
 
   function submitHandler(event) {
     event.preventDefault();
-    console.log(amount);
     const expenseData = {
       key: uuid(),
       title: title,
