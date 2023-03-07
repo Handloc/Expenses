@@ -8,7 +8,7 @@ const ExpensesWrapper = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  width: 60%;
+  width: 70%;
   background-color: #494949;
   padding: 2rem;
   border-radius: 1rem;
@@ -54,19 +54,23 @@ function Expenses(props) {
         <option>2022</option>
         <option>2023</option>
       </SelectList>
+
       {filteredExpenses.length === 0 ? (
         <Message>No expenses found</Message>
       ) : (
-        filteredExpenses.map((expense) => (
-          <Expense
-            key={expense.key}
-            title={expense.title}
-            amount={expense.amount}
-            year={expense.date.split("-")[0]}
-            month={expense.date.split("-")[1]}
-            day={expense.date.split("-")[2]}
-          />
-        ))
+        <>
+          <Charts />
+          {filteredExpenses.map((expense) => (
+            <Expense
+              key={expense.key}
+              title={expense.title}
+              amount={expense.amount}
+              year={expense.date.split("-")[0]}
+              month={expense.date.split("-")[1]}
+              day={expense.date.split("-")[2]}
+            />
+          ))}
+        </>
       )}
     </ExpensesWrapper>
   );

@@ -51,7 +51,7 @@ const Month = styled.p`
 `;
 
 function Expense(props) {
-  const monthNames = {
+  const numToMonths = {
     "01": "January",
     "02": "February",
     "03": "March",
@@ -69,7 +69,7 @@ function Expense(props) {
     <ExpenseWrapper>
       <DateContainer>
         <Year>{props.year}</Year>
-        <Month>{monthNames[props.month]}</Month>
+        <Month>{numToMonths[props.month]}</Month>
         <p>{props.day}</p>
       </DateContainer>
       <TitleContainer>{props.title}</TitleContainer>
