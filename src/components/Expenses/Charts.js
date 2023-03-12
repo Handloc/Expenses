@@ -33,21 +33,47 @@ const InfoBox = styled.div`
   }
 `;
 
-function Charts() {
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
+function Charts(props) {
+  const monthsToNum = {
+    January: "0",
+    February: "1",
+    March: "2",
+    April: "3",
+    May: "4",
+    June: "5",
+    July: "6",
+    August: "7",
+    September: "8",
+    October: "9",
+    November: "10",
+    December: "11",
+  };
+
+  const dataPoints = [
+    { label: "January", value: 0 },
+    { label: "February", value: 0 },
+    { label: "March", value: 0 },
+    { label: "April", value: 0 },
+    { label: "May", value: 0 },
+    { label: "June", value: 0 },
+    { label: "July", value: 0 },
+    { label: "August", value: 0 },
+    { label: "September", value: 0 },
+    { label: "October", value: 0 },
+    { label: "November", value: 0 },
+    { label: "December", value: 0 },
   ];
+
+  for (const expense of props.expenses) {
+    const expenseMonth = Number(expense.date.split("-")[1]);
+    dataPoints[expenseMonth - 1].value += +expense.amount;
+  }
+
+  let totalValue = 0;
+  const dataPointsValues = dataPoints.map(
+    (dataPoint) => (totalValue += dataPoint.value)
+  );
+  // const totalValue = Math.max(...dataPointsValues);
 
   const [currentMonth, setCurrentMonth] = useState("January");
   function changeMonth(month) {
@@ -57,15 +83,26 @@ function Charts() {
     <Wrapper>
       <InfoBox>
         <div>
+          Total expenses in {props.chosenYear}: <span>${totalValue}</span>
+        </div>
+      </InfoBox>
+      <InfoBox>
+        <div>
           Month: <span>{currentMonth}</span>
         </div>
         <div>
-          Expenses: <span>$100.00</span>
+          Expenses: <span>${dataPoints[monthsToNum[currentMonth]].value}</span>
         </div>
       </InfoBox>
       <ChartBarsWrapper>
-        {months.map((month) => (
-          <Chart monthName={month} onMonthChange={changeMonth} />
+        {dataPoints.map((month) => (
+          <Chart
+            key={month.label}
+            label={month.label}
+            value={month.value}
+            totalVal={totalValue}
+            onMonthChange={changeMonth}
+          />
         ))}
       </ChartBarsWrapper>
     </Wrapper>
