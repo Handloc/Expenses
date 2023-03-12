@@ -36,6 +36,21 @@ const SelectList = styled.select`
 `;
 
 function Expenses(props) {
+  const numToMonths = {
+    "01": "January",
+    "02": "February",
+    "03": "March",
+    "04": "April",
+    "05": "May",
+    "06": "June",
+    "07": "July",
+    "08": "August",
+    "09": "September",
+    10: "October",
+    11: "November",
+    12: "December",
+  };
+
   const [chosenYear, setChosenYear] = useState("2023");
 
   const changeYear = (yearValue) => {
@@ -59,14 +74,14 @@ function Expenses(props) {
         <Message>No expenses found</Message>
       ) : (
         <>
-          <Charts />
+          <Charts expenses={filteredExpenses} chosenYear={chosenYear} />
           {filteredExpenses.map((expense) => (
             <Expense
               key={expense.key}
               title={expense.title}
               amount={expense.amount}
               year={expense.date.split("-")[0]}
-              month={expense.date.split("-")[1]}
+              month={numToMonths[expense.date.split("-")[1]]}
               day={expense.date.split("-")[2]}
             />
           ))}
