@@ -73,7 +73,6 @@ function Charts(props) {
   const dataPointsValues = dataPoints.map(
     (dataPoint) => (totalValue += dataPoint.value)
   );
-  // const totalValue = Math.max(...dataPointsValues);
 
   const [currentMonth, setCurrentMonth] = useState("January");
   function changeMonth(month) {
